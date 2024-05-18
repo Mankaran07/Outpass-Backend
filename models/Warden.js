@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const hodSchema = new Schema({
+const wardenSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  collegeId: {
+  wardenId: {
     type: String,
     required: true,
     unique: true,
@@ -16,12 +16,8 @@ const hodSchema = new Schema({
     type: String,
     required: true,
   },
-  course: {
-    type: String,
-    required: true,
-  },
 });
 
-const Hod = mongoose.model("Hod", hodSchema);
+const Warden = mongoose.model("Warden", wardenSchema);
 
-module.exports = Hod;
+module.exports = Warden;
