@@ -4,7 +4,8 @@
   "description": "Outpass for Hostel Students",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon src/index.js"
   },
   "author": "Mankaran",
   "license": "ISC",
