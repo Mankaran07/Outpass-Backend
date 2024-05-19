@@ -1,6 +1,7 @@
 const express = require("express");
 const { createStudent, findStudent } = require("../repository/Student");
 const { createToken } = require("../middleware/authentication");
+const Student = require("../models/Student");
 
 const router = express.Router();
 
@@ -29,10 +30,16 @@ router.post("/register", async (req, res) => {
       console.log(
         `name: ${name}, registerationNumber: ${registerationNumber},roomNumber: ${roomNumber}, password: ${password},mobileNumber: ${mobileNumber}, course: ${course}, block: ${block}, type: ${type}`
       );
-      throw { error: "BAD REQUEST", statusCode: 400 };
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
     }
 
     if (type === "student") {
+      const student = Student.findOne({ registerationNumber });
+      if (student) {
+        return res.status(403).json({ error: "User already exists" });
+      }
       const data = await createStudent({
         name,
         registerationNumber,
@@ -69,7 +76,9 @@ router.post("/login", async (req, res) => {
       console.log(
         `registerationNumber: ${registerationNumber}, password: ${password},type: ${type}`
       );
-      throw { error: "BAD REQUEST", statusCode: 400 };
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
     }
     if (type === "student") {
       const data = await findStudent({ registerationNumber, password });

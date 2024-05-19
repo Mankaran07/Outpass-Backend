@@ -9,7 +9,9 @@ router.post("/login", async (req, res) => {
     const { wardenId, password, type } = req.body;
     if (!wardenId || !password || !type) {
       console.log(`wardenId: ${wardenId}, password: ${password},type: ${type}`);
-      throw { error: "BAD REQUEST", statusCode: 400 };
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
     }
     if (type === "warden") {
       const data = await findWarden({ wardenId, password });

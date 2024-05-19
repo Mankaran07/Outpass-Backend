@@ -1,6 +1,7 @@
 const express = require("express");
 const { createHod, findHod } = require("../repository/Hod");
 const { createToken } = require("../middleware/authentication");
+const Hod = require("../models/Hod");
 
 const router = express.Router();
 
@@ -11,10 +12,16 @@ router.post("/register", async (req, res) => {
       console.log(
         `name: ${name}, collegeId: ${collegeId}, password: ${password}, course: ${course}, type: ${type}`
       );
-      throw { error: "BAD REQUEST", statusCode: 400 };
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
     }
 
     if (type === "hod") {
+      const hod = await Hod.findOne({ collegeId });
+      if (hod) {
+        return res.status(403).json({ error: "User already exists" });
+      }
       const data = await createHod({ name, collegeId, password, course });
       const token = createToken({ collegeId, type });
       return res.status(201).json({
@@ -43,7 +50,9 @@ router.post("/login", async (req, res) => {
       console.log(
         `collegeId: ${collegeId}, password: ${password},type: ${type}`
       );
-      throw { error: "BAD REQUEST", statusCode: 400 };
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
     }
     if (type === "hod") {
       const data = await findHod({ collegeId, password });
