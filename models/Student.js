@@ -32,10 +32,12 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
-  OutpassId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Outpass",
-  },
+  OutpassId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Outpass",
+    },
+  ],
 });
 
 const Student = mongoose.model("Student", studentSchema);

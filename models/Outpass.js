@@ -18,7 +18,7 @@ const outpassSchema = new Schema({
     type: String,
     required: true,
   },
-  modeOfTrasport: {
+  modeOfTransport: {
     type: String,
     required: true,
   },
@@ -28,11 +28,15 @@ const outpassSchema = new Schema({
   },
   statusByHod: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   statusByWarden: {
     type: Boolean,
-    required: true,
+    default: false,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Student",
   },
 });
 

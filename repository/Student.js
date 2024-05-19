@@ -13,7 +13,7 @@ async function createStudent(user) {
 
 async function findStudent(user) {
   try {
-    const data = await Student.findOne(user);
+    const data = await Student.findOne({});
     return data;
   } catch (error) {
     console.log("Something went wrong while searching Student!!");

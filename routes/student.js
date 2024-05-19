@@ -82,7 +82,8 @@ router.post("/login", async (req, res) => {
     }
     if (type === "student") {
       const data = await findStudent({ registerationNumber, password });
-      const token = createToken({ registerationNumber, type, id: data._id });
+      const token = createToken({ type, id: data._id });
+
       return res.status(201).json({
         token: token,
         data: data,
