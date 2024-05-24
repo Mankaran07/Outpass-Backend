@@ -7,6 +7,7 @@ const hodRoutes = require("./routes/hod");
 const wardenRoutes = require("./routes/warden");
 const studentRoutes = require("./routes/student");
 const homeRoutes = require("./routes/home");
+const outpassRoutes = require("./routes/outpass");
 const app = express();
 
 app.use(bodyParser.json());
@@ -17,6 +18,7 @@ app.use("/hod", hodRoutes);
 app.use("/warden", wardenRoutes);
 app.use("/student", studentRoutes);
 app.use("/auth", homeRoutes);
+app.use("/outpass", outpassRoutes);
 
 const prepareAndStartServer = () => {
   app.listen(PORT, async () => {

@@ -12,7 +12,7 @@ router.post("/register", async (req, res) => {
       console.log(
         `name: ${name}, collegeId: ${collegeId}, password: ${password}, course: ${course}, type: ${type}`
       );
-      res.status(400).json({
+      return res.status(400).json({
         error: "BAD REQUEST",
       });
     }
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
         return res.status(403).json({ error: "User already exists" });
       }
       const data = await createHod({ name, collegeId, password, course });
-      const token = createToken({ type });
+      const token = createToken({ collegeId, type });
       return res.status(201).json({
         token: token,
         data: data,
@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
     }
     if (type === "hod") {
       const data = await findHod({ collegeId, password });
-      const token = createToken({ type });
+      const token = createToken({ collegeId, type });
       return res.status(201).json({
         token: token,
         data: data,
@@ -67,6 +67,33 @@ router.post("/login", async (req, res) => {
       error: "Wrong Type",
       success: false,
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(error.statusCode || 500).json({
+      error: error,
+      success: false,
+    });
+  }
+});
+
+router.get("/request", (req, res) => {
+  try {
+    const outpass = findOutpassHod();
+    return res.status(200).json({ outpass: outpass });
+  } catch (error) {
+    console.log(error);
+    return res.status(error.statusCode || 500).json({
+      error: error,
+      success: false,
+    });
+  }
+});
+
+router.patch("/update", async (req, res) => {
+  try {
+    const { id, decision } = req.body;
+    const data = updateOutpassHod({ id, decision });
+    return res.status(200).json({ message: "Outpass successfully updated" });
   } catch (error) {
     console.log(error);
     return res.status(error.statusCode || 500).json({

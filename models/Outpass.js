@@ -22,16 +22,20 @@ const outpassSchema = new Schema({
     type: String,
     required: true,
   },
-  Reason: {
+  reason: {
     type: String,
     required: true,
   },
   statusByHod: {
-    type: Boolean,
-    required: true,
+    type: String,
+    default: "pending",
   },
   statusByWarden: {
-    type: Boolean,
+    type: String,
+    default: "pending",
+  },
+  student: {
+    type: String,
     required: true,
   },
 });
