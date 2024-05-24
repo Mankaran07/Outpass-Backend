@@ -2,8 +2,7 @@ const Hod = require("../models/Hod");
 
 async function createHod(user) {
   try {
-    const hod = new Hod(user);
-    await hod.save();
+    const hod = await Hod.create(user);
     return hod;
   } catch (error) {
     console.log("Something went wrong while creating HOD!!");

@@ -6,6 +6,7 @@ const cors = require("cors");
 const hodRoutes = require("./routes/hod");
 const wardenRoutes = require("./routes/warden");
 const studentRoutes = require("./routes/student");
+const homeRoutes = require("./routes/home");
 const app = express();
 
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use(cors());
 app.use("/hod", hodRoutes);
 app.use("/warden", wardenRoutes);
 app.use("/student", studentRoutes);
+app.use("/auth", homeRoutes);
 
 const prepareAndStartServer = () => {
   app.listen(PORT, async () => {

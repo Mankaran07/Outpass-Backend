@@ -15,7 +15,7 @@ router.post("/login", async (req, res) => {
     }
     if (type === "warden") {
       const data = await findWarden({ wardenId, password });
-      const token = createToken({ wardenId, type });
+      const token = createToken({ type });
       return res.status(201).json({
         token: token,
         data: data,

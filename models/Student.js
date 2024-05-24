@@ -6,7 +6,7 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
-  registerationNumber: {
+  registrationNumber: {
     type: String,
     required: true,
     unique: true,
@@ -14,7 +14,6 @@ const studentSchema = new Schema({
   roomNumber: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,

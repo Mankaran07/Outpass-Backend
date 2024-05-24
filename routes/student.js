@@ -9,7 +9,7 @@ router.post("/register", async (req, res) => {
   try {
     const {
       name,
-      registerationNumber,
+      registrationNumber,
       roomNumber,
       password,
       mobileNumber,
@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
     } = req.body;
     if (
       !name ||
-      !registerationNumber ||
+      !registrationNumber ||
       !roomNumber ||
       !password ||
       !mobileNumber ||
@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
       !type
     ) {
       console.log(
-        `name: ${name}, registerationNumber: ${registerationNumber},roomNumber: ${roomNumber}, password: ${password},mobileNumber: ${mobileNumber}, course: ${course}, block: ${block}, type: ${type}`
+        `name: ${name}, registrationNumber: ${registrationNumber},roomNumber: ${roomNumber}, password: ${password},mobileNumber: ${mobileNumber}, course: ${course}, block: ${block}, type: ${type}`
       );
       res.status(400).json({
         error: "BAD REQUEST",
@@ -36,20 +36,23 @@ router.post("/register", async (req, res) => {
     }
 
     if (type === "student") {
-      const student = Student.findOne({ registerationNumber });
+      const student = await Student.findOne({ registrationNumber });
       if (student) {
-        return res.status(403).json({ error: "User already exists" });
+        return res.status(403).json({
+          error: "User already exists",
+          success: false,
+        });
       }
       const data = await createStudent({
         name,
-        registerationNumber,
+        registrationNumber,
         roomNumber,
         password,
         mobileNumber,
         course,
         block,
       });
-      const token = createToken({ registerationNumber, type });
+      const token = createToken({ type });
       return res.status(201).json({
         token: token,
         data: data,
@@ -71,18 +74,18 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { registerationNumber, password, type } = req.body;
-    if (!registerationNumber || !password || !type) {
+    const { registrationNumber, password, type } = req.body;
+    if (!registrationNumber || !password || !type) {
       console.log(
-        `registerationNumber: ${registerationNumber}, password: ${password},type: ${type}`
+        `registrationNumber: ${registrationNumber}, password: ${password},type: ${type}`
       );
       res.status(400).json({
         error: "BAD REQUEST",
       });
     }
     if (type === "student") {
-      const data = await findStudent({ registerationNumber, password });
-      const token = createToken({ registerationNumber, type, id: data._id });
+      const data = await findStudent({ registrationNumber, password });
+      const token = createToken({ type });
       return res.status(201).json({
         token: token,
         data: data,

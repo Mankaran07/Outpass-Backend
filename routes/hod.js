@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
         return res.status(403).json({ error: "User already exists" });
       }
       const data = await createHod({ name, collegeId, password, course });
-      const token = createToken({ collegeId, type });
+      const token = createToken({ type });
       return res.status(201).json({
         token: token,
         data: data,
@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
     }
     if (type === "hod") {
       const data = await findHod({ collegeId, password });
-      const token = createToken({ collegeId, type, id: data._id });
+      const token = createToken({ type });
       return res.status(201).json({
         token: token,
         data: data,
