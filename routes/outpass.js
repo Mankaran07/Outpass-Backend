@@ -1,4 +1,5 @@
 const express = require("express");
+const { createOutpass } = require("../repository/outpass");
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.post("/create", async (req, res) => {
       journey_to,
       state,
       zip,
-      modeOfTrasport,
+      modeOfTransport,
       reason,
       student,
     } = req.body;
@@ -23,19 +24,19 @@ router.post("/create", async (req, res) => {
       !student
     ) {
       console.log(
-        `journey_from: ${journey_from}, journey_to: ${journey_to}, state: ${state}, zip: ${zip}, modeOfTransport: ${modeOfTransport}, Reason: ${Reason}, Student: ${Student}`
+        `journey_from: ${journey_from}, journey_to: ${journey_to}, state: ${state}, zip: ${zip}, modeOfTransport: ${modeOfTransport}, Reason: ${reason}, Student: ${student}`
       );
       res.status(400).json({
         error: "BAD REQUEST",
       });
       return;
     }
-    const outpass = createOutpass({
+    const outpass = await createOutpass({
       journey_from,
       journey_to,
       state,
       zip,
-      modeOfTrasport,
+      modeOfTransport,
       reason,
       student,
     });

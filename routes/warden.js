@@ -13,7 +13,7 @@ router.post("/login", async (req, res) => {
     const { wardenId, password, type } = req.body;
     if (!wardenId || !password || !type) {
       console.log(`wardenId: ${wardenId}, password: ${password},type: ${type}`);
-      res.status(400).json({
+      return res.status(400).json({
         error: "BAD REQUEST",
       });
     }
@@ -39,9 +39,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/request", (req, res) => {
+router.get("/request", async (req, res) => {
   try {
-    const outpass = findOutpassWarden();
+    const outpass = await findOutpassWarden();
     return res.status(200).json({ outpass: outpass });
   } catch (error) {
     console.log(error);

@@ -18,7 +18,7 @@ const outpassSchema = new Schema({
     type: String,
     required: true,
   },
-  modeOfTrasport: {
+  modeOfTransport: {
     type: String,
     required: true,
   },

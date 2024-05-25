@@ -25,10 +25,8 @@ const updateOutpassWarden = async (data) => {
 };
 
 //Hod Routes
-const findOutpassHod = async (id) => {
+const findOutpassHod = async () => {
   try {
-    const hod = await Hod.findOne(id);
-    console.log(hod);
     const data = await Outpass.find({ statusByHod: "pending" });
     return data;
   } catch (error) {
@@ -52,7 +50,7 @@ const updateOutpassHod = async (data) => {
 //Student Routes
 const findOutpassStudent = async (id) => {
   try {
-    const data = await Outpass.find({ Student: id });
+    const data = await Outpass.find({ student: id });
     return data;
   } catch (error) {
     console.log("Something went wrong to find the Outpasses");

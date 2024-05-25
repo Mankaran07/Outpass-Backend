@@ -108,7 +108,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/status", async (req, res) => {
   try {
-    const id = req.headers;
+    const id = req.headers["id"];
     const data = await findOutpassStudent(id);
     return res.status(200).json({ outpass: data });
   } catch (error) {
